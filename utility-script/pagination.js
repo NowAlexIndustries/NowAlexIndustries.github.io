@@ -1,6 +1,7 @@
 
 let pages = Array.from(document.getElementsByClassName('content'));
 let navItems = Array.from(document.getElementsByClassName('nav-item'));
+let buttonsEnters = Array.from(document.getElementsByClassName('click-on-enter'));
 
 function paginate(pg) {
     // Hide all pages 
@@ -24,5 +25,17 @@ function paginate(pg) {
     let selectedNav = document.getElementById(pg + '-nav');
     if (selectedNav) {
         selectedNav.classList.add('active-nav');
+    }
+
+    // remove click-on-enter-active class from all buttonEnters
+    buttonsEnters.forEach(function(btnE) {
+        btnE.classList.remove('click-on-enter-active');
+    });
+
+    // add click-on-enter-active class for buttonsEnters on the selected page
+    let activeBtn = document.getElementById(pg + '-btn');
+    if (activeBtn) {
+        activeBtn.classList.add('click-on-enter-active');
+        console.log(7);
     }
 }
