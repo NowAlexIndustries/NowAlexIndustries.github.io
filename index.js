@@ -144,7 +144,7 @@ const szaz = 'az alkoholszázalék';
 const low = 'tul kicsi';
 const big = 'tul nagy'
 
-function higitasHandler(data, x, y, minX, maxX, minY, maxY) {
+function fokolasHandler(data, x, y, minX, maxX, minY, maxY) {
     
     let alcError = '';
     let xError = true;
@@ -189,7 +189,7 @@ function calculateFokolas() {
     let homerseklet = parseFloat(document.getElementById('measuredTemp').value);
     let mert_alkoholszazalek = parseFloat(document.getElementById('measuredQuantity').value);
 
-    let res = higitasHandler(corretionTable, homerseklet, mert_alkoholszazalek, minHomerseklet, maxHomerseklet, minAlcoholSzazalek, maxAlcoholSzazalek);
+    let res = fokolasHandler(corretionTable, homerseklet, mert_alkoholszazalek, minHomerseklet, maxHomerseklet, minAlcoholSzazalek, maxAlcoholSzazalek);
     fokolasOutput.innerHTML = res;
     fokolasOutput.style.display = 'block';
     console.log(res);
@@ -425,3 +425,23 @@ function pasteText(id) {
         console.error('No text found in localStorage.');
     }
 }
+
+
+/* click button on current virtual page on enter */
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        
+        let activeBtns = Array.from(document.getElementsByClassName('click-on-enter-active'));
+
+        // Loop through all buttons
+        activeBtns.forEach(function(button) {
+            button.click();
+            console.log(1);
+        });
+
+    }
+}
+ 
+// Attach keypress event listener to the document
+document.addEventListener("keypress", handleKeyPress);
