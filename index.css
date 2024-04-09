@@ -296,3 +296,15 @@ li {
     /* placeholder style */
     background-color: red;
 }
+
+button:has(.icon-svg) {
+    
+}
+
+.icon-svg {
+    height: 1rem;
+    min-height: 1rem;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
