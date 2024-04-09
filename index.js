@@ -106,11 +106,11 @@ function calclulatehigitas() {
                 const folyadek = pct * qt / dpct;
                 const plusszFolyadek = folyadek - qt;
                 innerHtmlAlc = `
-                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas')">
+                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas')" data-tooltip="másol" aria-label="másol">
                     ${copySvgText}
                 </button></div>
                 <hr id="sep">
-                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus')">
+                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus')" data-tooltip="másol" aria-label="másol">
                     ${copySvgText}
                 </button></div>
                 `;
@@ -229,7 +229,7 @@ function fokolasHandler(data, x, y, minX, maxX, minY, maxY) {
     <span id="resultQuantity-real_alc">
         ${interpolate2DArray(data, x0, y0)}
     </span>
-    <button onclick="copyText('resultQuantity-real_alc')">
+    <button onclick="copyText('resultQuantity-real_alc')" data-tooltip="másol" aria-label="másol">
         ${copySvgText}
     </button>
     `;
@@ -294,11 +294,11 @@ function addAlcohol() {
     newItem.innerHTML = `
     <div>
         <input type="text" class="quantity" placeholder="0" name="quantity_${i}" id="quantity_${i}" inputmode="decimal" oninput="validateQuantity(event)">
-        <button onclick="pasteText('quantity_${i}')">${pasteSvgText}</button>
+        <button onclick="pasteText('quantity_${i}')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
         <input type="text" class="percentage" placeholder="0" name="percent_${i}" id="percent_${i}" inputmode="decimal" oninput="validatePercent(event)">
-        <button onclick="pasteText('percent_${i}')">${pasteSvgText}</button>
+        <button onclick="pasteText('percent_${i}')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     `;
     document.getElementById('alcohols').appendChild(newItem);
@@ -392,11 +392,11 @@ function calclulateKeveres() {
     }
 
     keveresOutput.innerHTML = `
-<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity')">
+<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity')" data-tooltip="másol" aria-label="másol">
     ${copySvgText}
 </button></div>
 <hr id="sep">
-<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage')">
+<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage')" data-tooltip="másol" aria-label="másol">
     ${copySvgText}
 </button></div>`;
     keveresOutput.style.display = 'block';
@@ -422,21 +422,21 @@ function reset_keveres() {
   <li id="alcohol_0" class="alcoholField">
     <div>
       <input type="text" class="quantity" placeholder="0" name="quantity_0" id="quantity_0" inputmode="decimal" oninput="validateQuantity(event)">
-      <button onclick="pasteText('quantity_0')">${pasteSvgText}</button>
+      <button onclick="pasteText('quantity_0')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
       <input type="text" class="percentage" placeholder="0" name="percent_0" id="percent_0" inputmode="decimal" oninput="validatePercent(event)">
-      <button onclick="pasteText('percent_0')">${pasteSvgText}</button>
+      <button onclick="pasteText('percent_0')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
   </li>
   <li id="alcohol_1" class="alcoholField">
     <div>
       <input type="text" class="quantity" placeholder="0" name="quantity_1" id="quantity_1" inputmode="decimal" oninput="validateQuantity(event)">
-      <button onclick="pasteText('quantity_1')">${pasteSvgText}</button>
+      <button onclick="pasteText('quantity_1')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
       <input type="text" class="percentage" placeholder="0" name="percent_1" id="percent_1" inputmode="decimal" oninput="validatePercent(event)">
-      <button onclick="pasteText('percent_1')">${pasteSvgText}</button>
+      <button onclick="pasteText('percent_1')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
   </li>
     `;

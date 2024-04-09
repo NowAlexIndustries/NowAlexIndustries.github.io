@@ -247,7 +247,8 @@
               <label class="input" for="measuredQuantity">Mért alkoholszázalék</label>
               <div>
                 <input class="input" type="text" placeholder="0" name="measuredQuantity" id="measuredQuantity" inputmode="decimal" oninput="validateQuantity(event)">
-                <button onclick="pasteText('measuredQuantity')">
+                <button onclick="pasteText('measuredQuantity')" data-tooltip="beilleszt" aria-label="beilleszt">
+                  <!--TODO: változzon másoltra a tooltip katt után meg texture is változzon-->
                   <svg
                     class="icon-svg"
                     aria-hidden="true"
@@ -269,7 +270,7 @@
               <label class="input" for="measuredTemp">Mért alkoholhőmérséklet</label>
               <div>
                 <input class="input" type="text" placeholder="0" name="measuredTemp" id="measuredTemp" inputmode="decimal" oninput="validatePercent(event)">
-                <button onclick="pasteText('measuredTemp')">
+                <button onclick="pasteText('measuredTemp')" data-tooltip="beilleszt" aria-label="beilleszt">
                   <svg
                     class="icon-svg"
                     aria-hidden="true"
@@ -291,7 +292,7 @@
           </div>
           <div class="controls body-container">
               <button id="fokolas-btn" class="click-on-enter btn button-style1" onclick="calculateFokolas()">Fokolás</button>
-              <button class="sideBtn" onclick="reset_fokolas()">
+              <button class="sideBtn" onclick="reset_fokolas()" data-tooltip="minden törlése" aria-label="minden törlése">
                   <svg
                     class="icon-svg"
                     aria-hidden="true"
@@ -325,7 +326,7 @@
               <li id="alcohol_0" class="alcoholField">
                 <div>
                   <input type="text" class="quantity" placeholder="0" name="quantity_0" id="quantity_0" inputmode="decimal" oninput="validateQuantity(event)">
-                  <button onclick="pasteText('quantity_0')">
+                  <button onclick="pasteText('quantity_0')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -346,7 +347,7 @@
                 </div>
                 <div>
                   <input type="text" class="percentage" placeholder="0" name="percent_0" id="percent_0" inputmode="decimal" oninput="validatePercent(event)">
-                  <button onclick="pasteText('percent_0')">
+                  <button onclick="pasteText('percent_0')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                     class="icon-svg"
                     aria-hidden="true"
@@ -369,7 +370,7 @@
               <li id="alcohol_1" class="alcoholField">
                 <div>
                   <input type="text" class="quantity" placeholder="0" name="quantity_1" id="quantity_1" inputmode="decimal" oninput="validateQuantity(event)">
-                  <button onclick="pasteText('quantity_1')">
+                  <button onclick="pasteText('quantity_1')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -390,7 +391,7 @@
                 </div>
                 <div>
                   <input type="text" class="percentage" placeholder="0" name="percent_1" id="percent_1" inputmode="decimal" oninput="validatePercent(event)">
-                  <button onclick="pasteText('percent_1')">
+                  <button onclick="pasteText('percent_1')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -414,7 +415,7 @@
             <div class="controls">
                 <button class="btn circle addBtn" onclick="addAlcohol()" aria-label="új alkohol hozzáadása"><span class="br"></span><span class="br"></span>das</button>
                 <button id="keveres-btn" class="click-on-enter button-style1" onclick="calclulateKeveres()">Keverés</button>
-                <button class="sideBtn" onclick="reset_keveres()">
+                <button class="sideBtn" onclick="reset_keveres()" data-tooltip="minden törlése" aria-label="minden törlése">
                   <svg
                     class="icon-svg"
                     aria-hidden="true"
@@ -443,7 +444,7 @@
                 <label class="input" for="quantity">Mennyiség</label>
                 <div>
                   <input class="input" type="text" placeholder="0" name="quantity" id="quantity" inputmode="decimal" oninput="validateQuantity(event)">
-                  <button onclick="pasteText('quantity')">
+                  <button onclick="pasteText('quantity')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -465,7 +466,7 @@
                 <label class="input" for="percentage">Alkoholszázalék</label>
                 <div>
                   <input class="input" type="text" placeholder="0" name="percent" id="percentage" inputmode="decimal" oninput="validatePercent(event)">
-                  <button onclick="pasteText('percentage')">
+                  <button onclick="pasteText('percentage')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -487,7 +488,7 @@
                 <label class="input" for="desiredPercentage">Kívánt alkoholszázalék</label>
                 <div>
                   <input class="input" type="text" placeholder="0" name="desiredPercent" id="desiredPercentage" inputmode="decimal" oninput="validatePercent(event)">
-                  <button onclick="pasteText('desiredPercentage')">
+                  <button onclick="pasteText('desiredPercentage')" data-tooltip="beilleszt" aria-label="beilleszt">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
@@ -509,7 +510,7 @@
             </div>
             <div class="controls body-container">
                 <button id="higitas-btn" class="click-on-enter btn button-style1" onclick="calclulatehigitas()">Higítás</button>
-                <button class="sideBtn" onclick="reset_higitas()">
+                <button class="sideBtn" onclick="reset_higitas()" data-tooltip="minden törlése" aria-label="minden törlése">
                     <svg
                       class="icon-svg"
                       aria-hidden="true"
