@@ -288,6 +288,10 @@ li {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
+button {
+    cursor: pointer;
+}
+
 .active-nav {
     /* placeholder style */
     background-color: red;
@@ -358,6 +362,9 @@ button:has(.icon-svg) {
     transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
     transition: 150ms transform;
     transform-origin: bottom center;
+
+        /* this style prevents persistence of the tooltip when hovering over it */
+        pointer-events: none;
 }
 
 [data-tooltip]::before {
@@ -378,8 +385,6 @@ button:has(.icon-svg) {
 [data-tooltip]:focus-visible::before,
 [data-tooltip]:focus-visible::after {
     --scale: 1;
-    /*** this style prevents persistence of the tooltip when hovering over it ***/
-    pointer-events: none;
 }
 
 [data-tooltip]::after {
