@@ -401,3 +401,7 @@ button:has(.icon-svg) {
     fill="colorvalue" is also working, but color="colorvalue" only works for text, and not for svgs*/
     color: green;
 }
+
+.hidden-copy-svg {
+    display: none;
+}

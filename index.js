@@ -4,7 +4,7 @@ let keveresOutput = document.getElementById('keveres-output');
 
 const copySvgText = `
 <svg
-    class="icon-svg"
+    class="icon-svg original-copy-svg"
     aria-hidden="true"
     focusable="false"
     data-prefix="fad"
@@ -19,11 +19,8 @@ const copySvgText = `
         ></path>
     </g>
 </svg>
-`;
-
-const copiedSvgText = `
 <svg
-    class="icon-svg"
+    class="icon-svg successful-copy-svg hidden-copy-svg"
     aria-hidden="true"
     focusable="false"
     data-prefix="fad"
@@ -338,7 +335,7 @@ function addAlcohol() {
             if (!existingChild) {
                 let delBtn = document.createElement('button');
                 delBtn.className = 'sideBtn delBtn';
-                delBtn.setAttribute("aria-label", "alkohol törlése");
+                delBtn.setAttribute('aria-label', 'alkohol törlése');
                 delBtn.innerHTML = '<span class="bar"></span><span class="bar"></span>';
                 delBtn.onclick = function () { deleteField(field.id); };
                 field.appendChild(delBtn);
@@ -480,14 +477,13 @@ function reset_higitas() {
 }
 
 // make a localstorage based clipboard and use that instead of the actual one
-
 function copyText(id, btnSelf) {
     let text = document.getElementById(id).innerText;
 
     // Store text in localStorage
     localStorage.setItem('copiedText', text);
   
-    console.log("Text copied to localStorage: " + text);
+    console.log('Text copied to localStorage: ' + text);
 
 
 
@@ -495,15 +491,26 @@ function copyText(id, btnSelf) {
     /* hande icon, tooltip and aria-label change */
     
     // Set new content and tooltip
-    btnSelf.innerHTML = copiedSvgText;
-    btnSelf.setAttribute("data-tooltip", copiedTooltip);
-    btnSelf.setAttribute("aria-label", copiedTooltip);
+    btnSelf.querySelector('.original-copy-svg').classList.add('hidden-copy-svg');
+    btnSelf.querySelector('.successful-copy-svg').classList.remove('hidden-copy-svg');
+    btnSelf.setAttribute('data-tooltip', copiedTooltip);
+    btnSelf.setAttribute('aria-label', copiedTooltip);
     
+    // Clear previous timeout, if any
+    if (btnSelf.timeoutRef) {
+        clearTimeout(btnSelf.timeoutRef);
+    }
+
+    /* timeOut without a reference is bad, since if we click the button and then click it again it will still revert back to the original content if 2 seconds pass from the first click*/
+
     // After 2 seconds, revert back to original content and tooltip
-    setTimeout(function() {
-        btnSelf.innerHTML = copySvgText;
-        btnSelf.setAttribute("data-tooltip", copyTooltip);
-        btnSelf.setAttribute("aria-label", copyTooltip);
+    // Set a new timeout and store the reference, which is unique for each button
+    btnSelf.timeoutRef = setTimeout(function() {
+        btnSelf.querySelector('.successful-copy-svg').classList.add('hidden-copy-svg');
+        btnSelf.querySelector('.original-copy-svg').classList.remove('hidden-copy-svg');
+        btnSelf.setAttribute('data-tooltip', copyTooltip);
+        btnSelf.setAttribute('aria-label', copyTooltip);
+        btnSelf.timeoutRef = null; // Remove the reference once timeout is completed
     }, 2000);
 }
 
@@ -516,7 +523,7 @@ function pasteText(id) {
         let element = document.getElementById(id);
         element.value = text;
         element.dispatchEvent(new Event('input')); // trigger an input event, so oninput will call validator function, so percentage and other values get validated just like when you input them by hand or from the real keyboard
-        console.log("Text pasted from localStorage: " + text);
+        console.log('Text pasted from localStorage: ' + text);
     } else {
         console.error('No text found in localStorage.');
     }
@@ -526,7 +533,7 @@ function pasteText(id) {
 /* click button on current virtual page on enter */
 
 function handleKeyPress(event) {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
         
         let activeBtns = Array.from(document.getElementsByClassName('click-on-enter-active'));
 
@@ -540,4 +547,4 @@ function handleKeyPress(event) {
 }
  
 // Attach keypress event listener to the document
-document.addEventListener("keypress", handleKeyPress);
+document.addEventListener('keypress', handleKeyPress);
