@@ -375,8 +375,8 @@ button:has(.icon-svg) {
 
 [data-tooltip]:hover::before,
 [data-tooltip]:hover::after,
-[data-tooltip]:focus::before,
-[data-tooltip]:focus::after {
+[data-tooltip]:focus-visible::before,
+[data-tooltip]:focus-visible::after {
     --scale: 1;
     /*** this style prevents persistence of the tooltip when hovering over it ***/
     pointer-events: none;
