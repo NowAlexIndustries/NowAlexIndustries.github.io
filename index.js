@@ -21,6 +21,31 @@ const copySvgText = `
 </svg>
 `;
 
+const copiedSvgText = `
+<svg
+    class="icon-svg"
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="fad"
+    data-icon="pipa ikon"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 448 512"
+>
+    <g>
+        <path
+            fill="currentColor"
+            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+            class="success"
+        ></path>
+    </g>
+</svg>
+`;
+
+const copyTooltip = 'másol';
+
+const copiedTooltip = 'kimásolva';
+
 const pasteSvgText = `
 <svg
     class="icon-svg"
@@ -106,11 +131,11 @@ function calclulatehigitas() {
                 const folyadek = pct * qt / dpct;
                 const plusszFolyadek = folyadek - qt;
                 innerHtmlAlc = `
-                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas')" data-tooltip="másol" aria-label="másol">
+                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
                     ${copySvgText}
                 </button></div>
                 <hr id="sep">
-                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus')" data-tooltip="másol" aria-label="másol">
+                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
                     ${copySvgText}
                 </button></div>
                 `;
@@ -229,7 +254,7 @@ function fokolasHandler(data, x, y, minX, maxX, minY, maxY) {
     <span id="resultQuantity-real_alc">
         ${interpolate2DArray(data, x0, y0)}
     </span>
-    <button onclick="copyText('resultQuantity-real_alc')" data-tooltip="másol" aria-label="másol">
+    <button onclick="copyText('resultQuantity-real_alc', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
         ${copySvgText}
     </button>
     `;
@@ -392,11 +417,11 @@ function calclulateKeveres() {
     }
 
     keveresOutput.innerHTML = `
-<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity')" data-tooltip="másol" aria-label="másol">
+<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
     ${copySvgText}
 </button></div>
 <hr id="sep">
-<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage')" data-tooltip="másol" aria-label="másol">
+<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
     ${copySvgText}
 </button></div>`;
     keveresOutput.style.display = 'block';
@@ -456,13 +481,30 @@ function reset_higitas() {
 
 // make a localstorage based clipboard and use that instead of the actual one
 
-function copyText(id) {
+function copyText(id, btnSelf) {
     let text = document.getElementById(id).innerText;
 
     // Store text in localStorage
     localStorage.setItem('copiedText', text);
   
     console.log("Text copied to localStorage: " + text);
+
+
+
+
+    /* hande icon, tooltip and aria-label change */
+    
+    // Set new content and tooltip
+    btnSelf.innerHTML = copiedSvgText;
+    btnSelf.setAttribute("data-tooltip", copiedTooltip);
+    btnSelf.setAttribute("aria-label", copiedTooltip);
+    
+    // After 2 seconds, revert back to original content and tooltip
+    setTimeout(function() {
+        btnSelf.innerHTML = copySvgText;
+        btnSelf.setAttribute("data-tooltip", copyTooltip);
+        btnSelf.setAttribute("aria-label", copyTooltip);
+    }, 2000);
 }
 
 function pasteText(id) {

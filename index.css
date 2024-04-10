@@ -395,3 +395,9 @@ button:has(.icon-svg) {
     border-top-color: var(--tooltip-color);
     transform-origin: top center;
 }
+
+.success {
+    /* fill="currentColor" in an svg path will fill the svg with its color, which it gets from a class
+    fill="colorvalue" is also working, but color="colorvalue" only works for text, and not for svgs*/
+    color: green;
+}
