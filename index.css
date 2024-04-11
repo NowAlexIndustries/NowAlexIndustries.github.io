@@ -143,10 +143,6 @@ li {
 .fa-secondary {
     color: #df49a6;
 }
-
-.grey {
-    color: #9b9b9b;
-}
   
 .logo {
     font-weight: bold;
@@ -292,7 +288,120 @@ li {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
+button {
+    cursor: pointer;
+}
+
 .active-nav {
     /* placeholder style */
     background-color: red;
+}
+
+button:has(.icon-svg) {
+    
+}
+
+.icon-svg {
+    height: 1rem;
+    min-height: 1rem;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
+
+.no-style-button {
+    background: none;
+    border: none;
+    color: inherit; /* Inherit text color from parent */
+    cursor: pointer;
+    padding: 0;
+    font: inherit; /* Inherit font from parent */
+    /* Additional styles can be added or adjusted as needed */
+    width: 100%;
+    height: 100%;
+}
+
+:focus {
+    outline: 1px solid orange;
+    box-shadow: none;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+:focus-visible {
+    outline: 2px solid blue;
+}
+
+.navbar :focus-visible {
+    box-shadow: inset 0 0 200px rgba(0, 0, 255, 0.18);
+}
+
+
+
+
+[data-tooltip] {
+    position: relative;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+[data-tooltip]::before,
+[data-tooltip]::after {
+    --scale: 0;
+    --arrow-size: 8px;
+    --tooltip-color: green;
+
+    position: absolute;
+    top: -.25rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+    transition: 150ms transform;
+    transform-origin: bottom center;
+
+        /* this style prevents persistence of the tooltip when hovering over it */
+        pointer-events: none;
+}
+
+[data-tooltip]::before {
+    --translate-y: calc(-100% - var(--arrow-size));
+
+    content: attr(data-tooltip);
+    color: white;
+    padding: .5rem;
+    border-radius: .3rem;
+    text-align: center;
+    width: max-content;
+    max-width: 20rem;
+    background: var(--tooltip-color);
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::before,
+[data-tooltip]:focus-visible::after {
+    --scale: 1;
+}
+
+[data-tooltip]::after {
+    --translate-y: calc(-1 * var(--arrow-size));
+
+    content: '';
+    border: var(--arrow-size) solid transparent;
+    border-top-color: var(--tooltip-color);
+    transform-origin: top center;
+}
+
+.success {
+    /* fill="currentColor" in an svg path will fill the svg with its color, which it gets from a class
+    fill="colorvalue" is also working, but color="colorvalue" only works for text, and not for svgs*/
+    color: green;
+}
+
+.hidden-copy-svg {
+    display: none;
 }

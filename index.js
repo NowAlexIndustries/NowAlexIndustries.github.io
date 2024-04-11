@@ -2,6 +2,66 @@ let higitasOutput = document.getElementById('higitas-output');
 let fokolasOutput = document.getElementById('fokolas-output');
 let keveresOutput = document.getElementById('keveres-output');
 
+const copySvgText = `
+<svg
+    class="icon-svg original-copy-svg"
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="fad"
+    data-icon="másolás ikon"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 448 512"
+>
+    <g>
+        <path
+            d="M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
+        ></path>
+    </g>
+</svg>
+<svg
+    class="icon-svg successful-copy-svg hidden-copy-svg"
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="fad"
+    data-icon="pipa ikon"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 448 512"
+>
+    <g>
+        <path
+            fill="currentColor"
+            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+            class="success"
+        ></path>
+    </g>
+</svg>
+`;
+
+const copyTooltip = 'másol';
+
+const copiedTooltip = 'kimásolva';
+
+const pasteSvgText = `
+<svg
+    class="icon-svg"
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="fad"
+    data-icon="beillesztés ikon"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+>
+    <g>
+        <path
+            d="M160 0c-23.7 0-44.4 12.9-55.4 32H48C21.5 32 0 53.5 0 80V400c0 26.5 21.5 48 48 48H192V176c0-44.2 35.8-80 80-80h48V80c0-26.5-21.5-48-48-48H215.4C204.4 12.9 183.7 0 160 0zM272 128c-26.5 0-48 21.5-48 48V448v16c0 26.5 21.5 48 48 48H464c26.5 0 48-21.5 48-48V243.9c0-12.7-5.1-24.9-14.1-33.9l-67.9-67.9c-9-9-21.2-14.1-33.9-14.1H320 272zM160 40a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
+        ></path>
+    </g>
+</svg>
+`;
+
 /* higitas */
 
 function validateQuantity(event) {
@@ -68,9 +128,13 @@ function calclulatehigitas() {
                 const folyadek = pct * qt / dpct;
                 const plusszFolyadek = folyadek - qt;
                 innerHtmlAlc = `
-                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas')">Copy</button></div>
+                <div id="LeftRes" class="result-container"><span>Mennyiség: </span><span id="resultQuantity-higitas">${folyadek}</span><button onclick="copyText('resultQuantity-higitas', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
+                    ${copySvgText}
+                </button></div>
                 <hr id="sep">
-                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus')">Copy</button></div>
+                <div id="RigthRes" class="result-container"><span>Hozzáadandó mennyiség: </span><span id="resultQuantityPlus">${plusszFolyadek}</span><button onclick="copyText('resultQuantityPlus', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
+                    ${copySvgText}
+                </button></div>
                 `;
             } else {
                 if (pct == 0) {
@@ -182,7 +246,15 @@ function fokolasHandler(data, x, y, minX, maxX, minY, maxY) {
     const x0 = mapRange(x, minX, maxX, 0, data.length);
     const y0 = mapRange(y, minY, maxY, 0, data[0].length);
 
-    return interpolate2DArray(data, x0, y0);
+    return `
+    <span>Valós alkoholszázalék: </span>
+    <span id="resultQuantity-real_alc">
+        ${interpolate2DArray(data, x0, y0)}
+    </span>
+    <button onclick="copyText('resultQuantity-real_alc', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
+        ${copySvgText}
+    </button>
+    `;
 }
 
 function calculateFokolas() {
@@ -244,11 +316,11 @@ function addAlcohol() {
     newItem.innerHTML = `
     <div>
         <input type="text" class="quantity" placeholder="0" name="quantity_${i}" id="quantity_${i}" inputmode="decimal" oninput="validateQuantity(event)">
-        <button onclick="pasteText('quantity_${i}')">beillesztés</button>
+        <button onclick="pasteText('quantity_${i}')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
         <input type="text" class="percentage" placeholder="0" name="percent_${i}" id="percent_${i}" inputmode="decimal" oninput="validatePercent(event)">
-        <button onclick="pasteText('percent_${i}')">beillesztés</button>
+        <button onclick="pasteText('percent_${i}')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     `;
     document.getElementById('alcohols').appendChild(newItem);
@@ -263,7 +335,7 @@ function addAlcohol() {
             if (!existingChild) {
                 let delBtn = document.createElement('button');
                 delBtn.className = 'sideBtn delBtn';
-                delBtn.setAttribute("aria-label", "alkohol törlése");
+                delBtn.setAttribute('aria-label', 'alkohol törlése');
                 delBtn.innerHTML = '<span class="bar"></span><span class="bar"></span>';
                 delBtn.onclick = function () { deleteField(field.id); };
                 field.appendChild(delBtn);
@@ -342,9 +414,13 @@ function calclulateKeveres() {
     }
 
     keveresOutput.innerHTML = `
-<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity')">Copy</button></div>
+<div id="LeftRes" class="result-container"><span>Mennyiség:</span><span id="resultQuantity">${liquid}</span><button onclick="copyText('resultQuantity', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
+    ${copySvgText}
+</button></div>
 <hr id="sep">
-<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage')">Copy</button></div>`;
+<div id="RightRes" class="result-container"><span>Alkoholszázalék:</span><span id="resultPercentage">${resultAlcoholPercent}</span><button onclick="copyText('resultPercentage', this)" data-tooltip="${copyTooltip}" aria-label="${copyTooltip}">
+    ${copySvgText}
+</button></div>`;
     keveresOutput.style.display = 'block';
 }
 
@@ -368,21 +444,21 @@ function reset_keveres() {
   <li id="alcohol_0" class="alcoholField">
     <div>
       <input type="text" class="quantity" placeholder="0" name="quantity_0" id="quantity_0" inputmode="decimal" oninput="validateQuantity(event)">
-      <button onclick="pasteText('quantity_0')">beillesztés</button>
+      <button onclick="pasteText('quantity_0')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
       <input type="text" class="percentage" placeholder="0" name="percent_0" id="percent_0" inputmode="decimal" oninput="validatePercent(event)">
-      <button onclick="pasteText('percent_0')">beillesztés</button>
+      <button onclick="pasteText('percent_0')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
   </li>
   <li id="alcohol_1" class="alcoholField">
     <div>
       <input type="text" class="quantity" placeholder="0" name="quantity_1" id="quantity_1" inputmode="decimal" oninput="validateQuantity(event)">
-      <button onclick="pasteText('quantity_1')">beillesztés</button>
+      <button onclick="pasteText('quantity_1')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
     <div>
       <input type="text" class="percentage" placeholder="0" name="percent_1" id="percent_1" inputmode="decimal" oninput="validatePercent(event)">
-      <button onclick="pasteText('percent_1')">beillesztés</button>
+      <button onclick="pasteText('percent_1')" data-tooltip="beilleszt" aria-label="beilleszt">${pasteSvgText}</button>
     </div>
   </li>
     `;
@@ -401,14 +477,41 @@ function reset_higitas() {
 }
 
 // make a localstorage based clipboard and use that instead of the actual one
-
-function copyText(id) {
+function copyText(id, btnSelf) {
     let text = document.getElementById(id).innerText;
 
     // Store text in localStorage
     localStorage.setItem('copiedText', text);
   
-    console.log("Text copied to localStorage: " + text);
+    console.log('Text copied to localStorage: ' + text);
+
+
+
+
+    /* hande icon, tooltip and aria-label change */
+    
+    // Set new content and tooltip
+    btnSelf.querySelector('.original-copy-svg').classList.add('hidden-copy-svg');
+    btnSelf.querySelector('.successful-copy-svg').classList.remove('hidden-copy-svg');
+    btnSelf.setAttribute('data-tooltip', copiedTooltip);
+    btnSelf.setAttribute('aria-label', copiedTooltip);
+    
+    // Clear previous timeout, if any
+    if (btnSelf.timeoutRef) {
+        clearTimeout(btnSelf.timeoutRef);
+    }
+
+    /* timeOut without a reference is bad, since if we click the button and then click it again it will still revert back to the original content if 2 seconds pass from the first click*/
+
+    // After 2 seconds, revert back to original content and tooltip
+    // Set a new timeout and store the reference, which is unique for each button
+    btnSelf.timeoutRef = setTimeout(function() {
+        btnSelf.querySelector('.successful-copy-svg').classList.add('hidden-copy-svg');
+        btnSelf.querySelector('.original-copy-svg').classList.remove('hidden-copy-svg');
+        btnSelf.setAttribute('data-tooltip', copyTooltip);
+        btnSelf.setAttribute('aria-label', copyTooltip);
+        btnSelf.timeoutRef = null; // Remove the reference once timeout is completed
+    }, 2000);
 }
 
 function pasteText(id) {
@@ -420,7 +523,7 @@ function pasteText(id) {
         let element = document.getElementById(id);
         element.value = text;
         element.dispatchEvent(new Event('input')); // trigger an input event, so oninput will call validator function, so percentage and other values get validated just like when you input them by hand or from the real keyboard
-        console.log("Text pasted from localStorage: " + text);
+        console.log('Text pasted from localStorage: ' + text);
     } else {
         console.error('No text found in localStorage.');
     }
@@ -430,7 +533,7 @@ function pasteText(id) {
 /* click button on current virtual page on enter */
 
 function handleKeyPress(event) {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
         
         let activeBtns = Array.from(document.getElementsByClassName('click-on-enter-active'));
 
@@ -444,4 +547,4 @@ function handleKeyPress(event) {
 }
  
 // Attach keypress event listener to the document
-document.addEventListener("keypress", handleKeyPress);
+document.addEventListener('keypress', handleKeyPress);
